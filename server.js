@@ -1,14 +1,18 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
+const path = require("path");
 
 const PORT = process.env.PORT || 3000;
 
-const ResistanceController = require("./controllers/resistanceController")
+const workoutController = require("./controllers/workoutController")
 
 // express middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+// middleware for running public folder
+app.use(express.static("public"));
 
 // mongoose middleware
 mongoose.connect(
@@ -33,7 +37,15 @@ app.get("/api/config", (req,res)    =>  {
     });
 });
 
-app.use("/api/resistance", ResistanceController);
+app.use("/api/workouts", workoutController);
+
+app.get("/exercise", function (req, res)  {
+  res.sendFile(path.join(__dirname, "./public/exercise.html"));
+})
+
+app.get("/stats", function (req, res)  {
+  res.sendFile(path.join(__dirname, "./public/stats.html"));
+})
 
 app.listen(PORT, () =>  {
     console.log(`App is running on http://localhost${PORT}`)
