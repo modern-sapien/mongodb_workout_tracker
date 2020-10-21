@@ -1,9 +1,10 @@
 const express = require("express");
 const mongoose = require("mongoose");
-
 const app = express();
 
 const PORT = process.env.PORT || 3000;
+
+const ResistanceController = require("./controllers/resistanceController")
 
 // express middleware
 app.use(express.urlencoded({ extended: true }));
@@ -31,6 +32,8 @@ app.get("/api/config", (req,res)    =>  {
         success: true,
     });
 });
+
+app.use("/api/resistance", ResistanceController);
 
 app.listen(PORT, () =>  {
     console.log(`App is running on http://localhost${PORT}`)
