@@ -30,7 +30,6 @@ router.get("/api/workouts/:id", (req, res)   =>  {
 // Add resistance workouts
 router.post("/api/workouts", (req, res)   =>  {
     console.log(req.body)
-    debugger
     db.Workout.create(req.body)
     .then(newWorkout => {
         res.json(newWorkout);
@@ -41,7 +40,8 @@ router.post("/api/workouts", (req, res)   =>  {
 
 // Update resistance workouts by id
 router.put("/api/workouts/:id", (req, res)   =>  {
-    db.Workout.findByIdAndUpdate(req.params.id, req.body)
+    db.Workout.findByIdAndUpdate(req.params.id, 
+        {$push: {exercises: req.body}})
     .then((updatedWorkout)    =>  {
     res.json(updatedWorkout)
     }).catch((err)  =>  {
