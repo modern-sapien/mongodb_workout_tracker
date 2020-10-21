@@ -3,14 +3,22 @@ const router = express.Router();
 const db = require("../models");
 
 // Get all resistance workouts
-router.get("/", (req, res)   =>  {
+router.get("/api/workouts", (req, res)   =>  {
     db.Workout.find({}).then(foundWorkout =>  {
         res.json(foundWorkout)
     })
 });
 
+router.get("/api/workouts/range", (req, res) =>  {
+    db.Workout.find({}).then(foundWorkout =>  {
+        res.json(foundWorkout)
+    }).catch((err)  =>  {
+        console.log(err)
+    })
+})
+
 // Find resistance workouts by id
-router.get("/:id", (req, res)   =>  {
+router.get("/api/workouts/:id", (req, res)   =>  {
     db.Workout.find({_id: req.params.id})
     .then(foundWorkout =>
         {res.json(foundWorkout)
@@ -20,8 +28,9 @@ router.get("/:id", (req, res)   =>  {
 })
 
 // Add resistance workouts
-router.post("/", (req, res)   =>  {
+router.post("/api/workouts", (req, res)   =>  {
     console.log(req.body)
+    debugger
     db.Workout.create(req.body)
     .then(newWorkout => {
         res.json(newWorkout);
@@ -31,7 +40,7 @@ router.post("/", (req, res)   =>  {
 })
 
 // Update resistance workouts by id
-router.put("/:id", (req, res)   =>  {
+router.put("/api/workouts/:id", (req, res)   =>  {
     db.Workout.findByIdAndUpdate(req.params.id, req.body)
     .then((updatedWorkout)    =>  {
     res.json(updatedWorkout)
@@ -41,7 +50,7 @@ router.put("/:id", (req, res)   =>  {
 })
 
 // Delete resistance workouts by id
-router.delete("/:id", (req, res)   =>  {
+router.delete("/api/workouts/:id", (req, res)   =>  {
     db.Workout.findByIdAndDelete(req.params.id).then((result) => {
         res.json(result)
     })

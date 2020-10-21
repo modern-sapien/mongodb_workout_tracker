@@ -16,7 +16,7 @@ app.use(express.static("public"));
 
 // mongoose middleware
 mongoose.connect(
-    process.env.MONGODB_URI || "mongodb://localhost/architecture",
+    process.env.MONGODB_URI || "mongodb://localhost/workout",
     { useNewUrlParser: true, useUnifiedTopology: true }
   );
 
@@ -37,7 +37,7 @@ app.get("/api/config", (req,res)    =>  {
     });
 });
 
-app.use("/api/workouts", workoutController);
+app.use("/", workoutController);
 
 app.get("/exercise", function (req, res)  {
   res.sendFile(path.join(__dirname, "./public/exercise.html"));
@@ -48,5 +48,5 @@ app.get("/stats", function (req, res)  {
 })
 
 app.listen(PORT, () =>  {
-    console.log(`App is running on http://localhost${PORT}`)
+    console.log(`App is running on http://localhost:${PORT}`)
 });
