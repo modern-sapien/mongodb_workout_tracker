@@ -17,7 +17,12 @@ app.use(express.static("public"));
 // mongoose middleware
 mongoose.connect(
     process.env.MONGODB_URI || "mongodb://localhost/workout",
-    { useNewUrlParser: true, useUnifiedTopology: true }
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+      useFindAndModify: false
+    }
   );
 
 // mongoose connected successfully 
